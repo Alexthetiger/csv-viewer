@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    fileName: '',
     rawFileData: null,
     hasParsedData: false,
     parsedDataHeader: null,
@@ -12,6 +13,9 @@ export default new Vuex.Store({
 
   },
   mutations: {
+    setFileName(state, data) {
+      state.fileName = data;
+    },
     setRawFileData(state, data) {
       state.rawFileData = data;
     },
@@ -26,14 +30,17 @@ export default new Vuex.Store({
         state.hasParsedData = false;
       }
     },
-    dropFile(state) {
+    dropFileData(state) {
       state.rawFileData = null;
+      state.fileName = '';
+      this.commit('setParsedFileData', null);
     },
   },
   actions: {
 
   },
   getters: {
+    fileName: (state) => state.fileName,
     rawFileData: (state) => state.rawFileData,
     parsedDataHeader: (state) => state.parsedDataHeader,
     parsedDataBody: (state) => state.parsedDataBody,

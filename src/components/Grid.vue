@@ -1,18 +1,25 @@
 <template>
-    <div v-if="hasParsedData">
-        <table style="margin: 0 auto;">
-            <thead>
-                <tr>
-                    <th v-for="h in header">
-                        <td>{{h}}</td>
-                    </th>
-                </tr>
-                <tr v-for="row in content">
-                    <td v-for="col in row" v-text="col"></td>
-                </tr>
-            </thead>
-        </table>
-    </div>
+  <v-card v-if="hasParsedData">
+    <v-card-title>
+      {{tableTitle}}
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
+    <v-data-table
+      :footer-props="footerProps"
+      :headers="header"
+      :items="content"
+      :items-per-page="20"
+      :search="search"
+      class="elevation-10"
+    ></v-data-table>
+  </v-card>
 </template>
 
 <script>
@@ -27,20 +34,52 @@
     components: {
     },
     data() {
-      return {};
+      return {
+        search: '',
+        footerProps: {
+          'items-per-page-options': [10, 20, 50, 100, -1],
+          'show-current-page': true,
+          'show-first-last-page': true,
+        }
+      };
     },
     watch: {},
     computed: {
       ...mapGetters([
+        'fileName',
         'hasParsedData',
         'parsedDataHeader',
         'parsedDataBody',
       ]),
+      tableTitle() {
+        return this.fileName || '';
+      },
       header() {
-        return this.parsedDataHeader;
+        let header = [];
+        if (this.parsedDataHeader) {
+          this.parsedDataHeader.forEach((text, i) => {
+            header.push({
+              text: text,
+              value: '' + i,
+            })
+          })
+        }
+        return header;
       },
       content() {
-        return this.parsedDataBody;
+        let content = [];
+        if (this.parsedDataBody) {
+          this.parsedDataBody.forEach((item, i) => {
+            if (item) {
+              let itemObj = {};
+              item.forEach((value, pos) => {
+                itemObj['' + pos] = value;
+              })
+              content.push(itemObj);
+            }
+          });
+        }
+        return content;
       }
     },
     methods: {},

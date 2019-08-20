@@ -1,14 +1,41 @@
 <template>
-    <div id="app">
-        <div v-if="isFileLoaded">
-            <div class="apply-outer">
-                <input class="tool-name-input" placeholder="Enter tool name">
-                <button class="apply-btn">Apply</button>
+  <v-app id="app">
+    <v-app-bar
+      app
+      color="indigo"
+      dark
+    >
+      <v-app-bar-nav-icon @click.stop=""></v-app-bar-nav-icon>
+      <v-toolbar-title>CSV viewer</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-tooltip bottom  v-if="isFileLoaded" >
+        <template v-slot:activator="{ on }">
+          <v-btn icon @click="restart" v-on="on">
+            <v-icon>mdi-folder-plus-outline</v-icon>
+          </v-btn>
+        </template>
+        <span>Restart</span>
+      </v-tooltip>
+
+    </v-app-bar>
+
+    <v-content>
+      <v-container
+      >
+        <v-row
+          align="start"
+          justify="center"
+        >
+          <v-col class="text-center">
+            <div v-if="isFileLoaded">
+              <Grid />
             </div>
-            <Grid />
-        </div>
-        <FileUploader v-else />
-    </div>
+            <FileUploader v-else/>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
@@ -40,26 +67,14 @@
       }
     },
     methods: {
+      ...mapMutations([
+        'dropFileData',
+      ]),
+      restart() {
+        this.dropFileData();
+      }
     },
   }
 </script>
 <style>
-    .apply-outer{
-        padding: 10px 0;
-        text-align: center;
-    }
-    .tool-name-input {
-        border: 1px solid #bfcbd9;
-        border-radius: 4px;
-        margin-right: 10px;
-        padding: 8px 10px;
-        width: 500px;
-    }
-    .apply-btn{
-        background: #ddd;
-        border: 1px solid #bfcbd9;
-        border-radius: 4px;
-        cursor: pointer;
-        padding: 8px 20px;
-    }
 </style>

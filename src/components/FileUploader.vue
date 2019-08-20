@@ -35,12 +35,14 @@
     computed: {},
     methods: {
       ...mapMutations([
+        'setFileName',
         'setRawFileData',
         'setParsedFileData',
       ]),
       fileAdded(file) {
         let fr = new FileReader();
         fr.readAsText(file)
+        this.setFileName(file.name);
         fr.onload = (e) => {
           let raw = e.target.result;
           this.setRawFileData(raw);
