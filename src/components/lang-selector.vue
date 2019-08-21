@@ -1,13 +1,17 @@
 <template>
-  <v-menu bottom left>
+  <v-menu bottom left min-width="180">
     <template v-slot:activator="{ on }">
       <v-btn
         dark
         icon
         v-on="on"
       >
-<!--        <v-img :src="langIcon"></v-img>-->
-        <span>{{langIcon}}</span>
+        <v-img
+          :src="langIcon"
+          aspect-ratio="1"
+          contain
+          max-width="24"
+        ></v-img>
       </v-btn>
     </template>
 
@@ -17,7 +21,14 @@
         :key="item.value"
         @click="changeLanguage(item)"
       >
-        <v-list-item-title>{{ item.title }}</v-list-item-title>
+        <v-img
+          :src="item.icon"
+          contain
+          max-width="24"
+        ></v-img>
+        <v-list-item-title class="ma-2">
+          {{ item.title }}
+        </v-list-item-title>
       </v-list-item>
     </v-list>
   </v-menu>
@@ -42,7 +53,7 @@
         return this.languages || [];
       },
       langIcon() {
-        return this.langData && this.langData.value;
+        return this.langData && this.langData.icon;
       },
     },
     methods: {

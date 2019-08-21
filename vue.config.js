@@ -1,6 +1,7 @@
 'use strict'
-const path = require('path')
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
+const path = require('path');
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -12,7 +13,13 @@ module.exports = {
   publicPath: '',
   configureWebpack: {
     plugins: [
-      new VuetifyLoaderPlugin()
+      new VuetifyLoaderPlugin(),
+      new CopyPlugin([
+        {
+          from: resolve('src/static'),
+          to: 'static',
+        },
+      ]),
     ],
     resolve: {
       alias: {

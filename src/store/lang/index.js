@@ -10,12 +10,12 @@ export default {
       {
         title: 'English',
         value: 'en',
-        icon: 'img/us.png',
+        icon: './static/img/us.png',
       },
       {
         title: 'Русский',
         value: 'ru',
-        icon: 'img/ru.png',
+        icon: './static/img/ru.png',
       },
     ],
     defaultLangValue: 'en',
