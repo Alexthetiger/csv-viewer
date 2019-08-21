@@ -6,7 +6,7 @@
       <v-text-field
         v-model="search"
         append-icon="search"
-        label="Search"
+        :label="$t('grid.search.label')"
         single-line
         hide-details
       ></v-text-field>
@@ -37,6 +37,8 @@
       return {
         search: '',
         footerProps: {
+          'items-per-page-all-text': this.$t('grid.footer.items-per-page-all-text'),
+          'items-per-page-text': this.$t('grid.footer.items-per-page-text'),
           'items-per-page-options': [10, 20, 50, 100, -1],
           'show-current-page': true,
           'show-first-last-page': true,

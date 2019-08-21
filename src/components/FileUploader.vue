@@ -27,7 +27,7 @@
           url: "fake",
           autoProcessQueue: false,
           acceptedFiles: '.csv',
-          dictDefaultMessage: "Drop file here to upload",
+          dictDefaultMessage: this.$t('upload.message'),
         }
       };
     },

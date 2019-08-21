@@ -8,13 +8,14 @@
       <v-app-bar-nav-icon @click.stop=""></v-app-bar-nav-icon>
       <v-toolbar-title>CSV viewer</v-toolbar-title>
       <v-spacer></v-spacer>
+      <lang-selector></lang-selector>
       <v-tooltip bottom  v-if="isFileLoaded" >
         <template v-slot:activator="{ on }">
           <v-btn icon @click="restart" v-on="on">
             <v-icon>mdi-folder-plus-outline</v-icon>
           </v-btn>
         </template>
-        <span>Restart</span>
+        <span>{{$t('app.restart')}}</span>
       </v-tooltip>
 
     </v-app-bar>
@@ -46,11 +47,13 @@
 
   import FileUploader from './components/FileUploader';
   import Grid from './components/Grid';
+  import LangSelector from "./components/lang-selector";
 
   export default {
     name: 'app',
     props: [],
     components: {
+      LangSelector,
       FileUploader,
       Grid,
     },
