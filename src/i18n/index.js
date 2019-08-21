@@ -14,10 +14,11 @@ const messages = {
 
 let lang = localStorage.getItem('app-language');
 store.commit('setLanguage', lang);
+const defaultLang = store.getters.defaultLangValue;
 
 const i18n = new VueI18n({
-  locale: lang || 'en',
-  fallbackLocale: 'en',
+  locale: lang || defaultLang,
+  fallbackLocale: defaultLang,
   messages,
 })
 

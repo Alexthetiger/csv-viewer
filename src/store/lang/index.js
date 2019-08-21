@@ -41,5 +41,6 @@ export default {
         return state.languages.find((language) => language.value === state.defaultLangValue);
       }
     },
+    defaultLangValue: (state) => state.defaultLangValue,
   }
 }
