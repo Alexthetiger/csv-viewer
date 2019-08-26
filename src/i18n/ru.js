@@ -4,6 +4,11 @@ export default {
   },
   upload: {
     message: "Перетащите сюда файл",
+    error: {
+      wrongFileType: 'Неверный тип файла',
+      uploadError: 'Ошибка при загрузке файла',
+      readError: 'Ошибка при чтении файла',
+    },
   },
   grid: {
     search: {

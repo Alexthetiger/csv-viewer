@@ -9,7 +9,7 @@
       <v-toolbar-title>CSV viewer</v-toolbar-title>
       <v-spacer></v-spacer>
       <lang-selector></lang-selector>
-      <v-tooltip bottom  v-if="isFileLoaded" >
+      <v-tooltip bottom  v-if="stateResult || stateError" >
         <template v-slot:activator="{ on }">
           <v-btn icon @click="restart" v-on="on">
             <v-icon>mdi-folder-plus-outline</v-icon>
@@ -28,10 +28,23 @@
           justify="center"
         >
           <v-col class="text-center">
-            <div v-if="isFileLoaded">
+            <FileUploader v-if="stateInit"/>
+            <div v-if="stateResult">
               <Grid />
             </div>
-            <FileUploader v-else/>
+            <div v-if="stateLoading">
+              <v-progress-circular
+                :size="64"
+                :width="6"
+                color="primary"
+                indeterminate
+              ></v-progress-circular>
+            </div>
+            <div v-if="stateError">
+              <v-alert type="error">
+                {{errorMsg}}
+              </v-alert>
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -48,6 +61,12 @@
   import FileUploader from './components/FileUploader';
   import Grid from './components/Grid';
   import LangSelector from "./components/lang-selector";
+  import {
+    STATE_INIT,
+    STATE_LOADING,
+    STATE_RESULT,
+    STATE_ERROR,
+  } from "./store/file";
 
   export default {
     name: 'app',
@@ -63,8 +82,25 @@
     watch: {},
     computed: {
       ...mapGetters([
+        'appState',
+        'errorMessage',
         'hasParsedData',
       ]),
+      stateInit() {
+        return this.appState === STATE_INIT;
+      },
+      stateResult() {
+        return this.appState === STATE_RESULT;
+      },
+      stateLoading() {
+        return this.appState === STATE_LOADING;
+      },
+      stateError() {
+        return this.appState === STATE_ERROR;
+      },
+      errorMsg() {
+        return this.errorMessage;
+      },
       isFileLoaded() {
         return this.hasParsedData;
       }

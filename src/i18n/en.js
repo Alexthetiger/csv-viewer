@@ -4,6 +4,11 @@ export default {
   },
   upload: {
     message: "Drop file here to upload",
+    error: {
+      wrongFileType: 'Wrong file type',
+      uploadError: 'A error occured at file upload',
+      readError: 'A error occured at file read',
+    },
   },
   grid: {
     search: {
